@@ -1,9 +1,10 @@
 # Board specific SELinux policy variable definitions
-SEPOLICY_PATH:= device/qcom/common-sepolicy/sepolicy_vndr
-QSSI_SEPOLICY_PATH:= device/qcom/common-sepolicy/sepolicy
-BOARD_SYSTEM_EXT_PREBUILT_DIR := device/qcom/common-sepolicy/sepolicy/generic
-BOARD_PRODUCT_PREBUILT_DIR := device/qcom/common-sepolicy/sepolicy/generic/product
-SYS_ATTR_PROJECT_PATH := $(TOP)/device/qcom/common-sepolicy/sepolicy/generic/public/attribute
+ifeq ($(call is-vendor-board-platform,QCOM),true)
+SEPOLICY_PATH:= device/qcom/sepolicy_vndr
+QSSI_SEPOLICY_PATH:= device/qcom/sepolicy
+BOARD_SYSTEM_EXT_PREBUILT_DIR := device/qcom/sepolicy/generic
+BOARD_PRODUCT_PREBUILT_DIR := device/qcom/sepolicy/generic/product
+SYS_ATTR_PROJECT_PATH := $(TOP)/device/qcom/sepolicy/generic/public/attribute
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS:= \
     $(SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS) \
     $(QSSI_SEPOLICY_PATH)/generic/public \
@@ -44,4 +45,6 @@ ifeq (,$(filter sdm845 sdm710, $(TARGET_BOARD_PLATFORM)))
     BOARD_VENDOR_SEPOLICY_DIRS += $(SEPOLICY_PATH)/qva/vendor/test
     BOARD_VENDOR_SEPOLICY_DIRS += $(SEPOLICY_PATH)/qva/vendor/test/sysmonapp
     endif
+endif
+
 endif
